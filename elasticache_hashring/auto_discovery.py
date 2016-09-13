@@ -19,14 +19,11 @@ class WrongProtocolData(ValueError):
 
 def get_cluster_info(host, port):
     """
-    return dict with info about nodes in cluster and current version
-    {
-        'nodes': [
-            'IP:port',
-            'IP:port',
-        ],
-        'version': '1.4.4'
-    }
+    return list with info about nodes in cluster
+    [
+        'IP:port',
+        'IP:port',
+    ]
     """
     client = Telnet(host, int(port))
     client.write(b'version\n')
@@ -58,7 +55,4 @@ def get_cluster_info(host, port):
                                         smart_text(port)))
     except ValueError:
         raise WrongProtocolData(cmd, res)
-    return {
-        'version': version,
-        'nodes': nodes
-    }
+    return nodes
